@@ -352,16 +352,17 @@ export function createPageConfig (Page: any, pageConfig: PageConfig): any {
 
       getTabItem (itemPath: string) {
         const tabBar = globalAny.__taroAppConfig?.appConfig?.tabBar || {}
-        if (!tabBar) return ''
         let result: Record<string, unknown> = {}
-        for (let i = 0; i < tabBar.list.length; i++) {
-          const item = tabBar.list[i]
-          const path = item.pagePath.startsWith('/') ? item.pagePath : `/${item.pagePath}`
-          if (path === itemPath) {
-            result = {
-              index: i,
-              pagePath: path,
-              text: item.text
+        if (tabBar && tabBar.list) {
+          for (let i = 0; i < tabBar.list.length; i++) {
+            const item = tabBar.list[i]
+            const path = item.pagePath.startsWith('/') ? item.pagePath : `/${item.pagePath}`
+            if (path === itemPath) {
+              result = {
+                index: i,
+                pagePath: path,
+                text: item.text
+              }
             }
           }
         }
